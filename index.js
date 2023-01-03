@@ -178,13 +178,14 @@ app.post('/signout', (req, res) => {
 function sendVerificationEmail(email) {
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
-        service: "Gmail",
+        //service: "Gmail",
         secure: false,
         port: 587,
         auth: {
             user: "ploishare@gmail.com",
             pass: "gqvmyzfrbhyypljp"
         },
+        pool: true,
         // tls: {
         //     // do not fail on invalid certs
         //     rejectUnauthorized: false,
