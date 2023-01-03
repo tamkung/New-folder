@@ -24,6 +24,14 @@ connection.connect((error) => {
     }
 });
 
+app.get('/', (req, res) => {
+    return res.send({
+        error: false,
+        message: "Hello Ploishare",
+        written_by: "TWT",
+        published_on: "11/11/2565",
+    })
+})
 // Create route for registering a new user
 app.post('/register', (req, res) => {
     const { email, password } = req.body;
