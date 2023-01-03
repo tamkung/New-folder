@@ -3,11 +3,17 @@ const bcrypt = require('bcrypt');
 const mysql = require('mysql');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 
 const app = express();
 
 // Parse request body as JSON
-app.use(express.json());
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true,
+  };
+app.use(cors(corsOptions));
+//app.use(express.json());
 
 // Connect to MySQL database
 const connection = mysql.createConnection({
@@ -49,7 +55,6 @@ app.get('/', (req, res) => {
 })
 // Create route for registering a new user
 app.post('/signup', (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
     const { email, password } = req.body;
 
     // Check if the email already exists in the database
@@ -99,7 +104,6 @@ app.get('/verify', (req, res) => {
 });
 
 app.post('/signin', (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
     const { email, password } = req.body;
 
     // Query the database for the user with the given email
