@@ -37,7 +37,7 @@ const connection = mysql.createConnection({
     user: "315tbrkooe37c1c3ih5b",
     password: "pscale_pw_fpzwYnqTEK38acUZFp0thOIBDTcgeKWmFOYRXIGpHUr",
     database: "test",
-    ssl: {}
+    ssl: { "rejectUnauthorized": true }
 
     //filess DB
     // host: "wl7.h.filess.io",
@@ -178,6 +178,7 @@ app.post('/signout', (req, res) => {
 function sendVerificationEmail(email) {
     const transporter = nodemailer.createTransport({
         service: "Gmail",
+        secure: true,
         auth: {
             user: "ploishare@gmail.com",
             pass: "avvrtrwjsopeaase"
