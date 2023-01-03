@@ -67,41 +67,41 @@ app.get('/', (req, res) => {
 // Create route for registering a new user
 app.post('/signup', (req, res) => {
     const { email, password } = req.body;
-    sendVerificationEmail(email);
-    res.json({
-        status: "OK",
-        message: 'User registered successfully'
-    });
-    // Check if the email already exists in the database
-    // const sql = 'SELECT * FROM users WHERE email = ?';
-    // const values = [email];
-    // connection.query(sql, values, (error, results) => {
-    //     if (error) {
-    //         res.status(500).json({ message: 'Error checking for duplicate email' });
-    //     } else if (results.length > 0) {
-    //         res.status(400).json({ message: 'Email already exists' });
-    //     } else {
-    //         // Hash the password
-    //         const hashedPassword = bcrypt.hashSync(password, 8);
-
-    //         // Insert the new user into the database
-    //         const sql = 'INSERT INTO users (email, password) VALUES (?, ?)';
-    //         const values = [email, hashedPassword];
-    //         connection.query(sql, values, (error) => {
-    //             if (error) {
-    //                 res.status(500).json({ message: 'Error registering user' });
-
-    //             } else {
-    //                 // Send email verification email
-    //                 sendVerificationEmail(email);
-    //                 res.json({
-    //                     status: "OK",
-    //                     message: 'User registered successfully'
-    //                 });
-    //             }
-    //         });
-    //     }
+    // sendVerificationEmail(email);
+    // res.json({
+    //     status: "OK",
+    //     message: 'User registered successfully'
     // });
+    // Check if the email already exists in the database
+    const sql = 'SELECT * FROM users WHERE email = ?';
+    const values = [email];
+    connection.query(sql, values, (error, results) => {
+        if (error) {
+            res.status(500).json({ message: 'Error checking for duplicate email' });
+        } else if (results.length > 0) {
+            res.status(400).json({ message: 'Email already exists' });
+        } else {
+            // Hash the password
+            const hashedPassword = bcrypt.hashSync(password, 8);
+
+            // Insert the new user into the database
+            const sql = 'INSERT INTO users (email, password) VALUES (?, ?)';
+            const values = [email, hashedPassword];
+            connection.query(sql, values, (error) => {
+                if (error) {
+                    res.status(500).json({ message: 'Error registering user' });
+
+                } else {
+                    // Send email verification email
+                    sendVerificationEmail(email);
+                    res.json({
+                        status: "OK",
+                        message: 'User registered successfully'
+                    });
+                }
+            });
+        }
+    });
 });
 
 
