@@ -11,10 +11,18 @@ app.use(express.json());
 
 // Connect to MySQL database
 const connection = mysql.createConnection({
-    host: 'localhost',
-    port: 3307,
-    user: 'root',
-    database: 'test'
+    //local DB
+    // host: 'localhost',
+    // port: 3307,
+    // user: 'root',
+    // database: 'test'
+
+    //planetscale DB
+    host: "ap-southeast.connect.psdb.cloud",
+    user: "315tbrkooe37c1c3ih5b",
+    password: "pscale_pw_fpzwYnqTEK38acUZFp0thOIBDTcgeKWmFOYRXIGpHUr",
+    database: "test",
+    ssl: {}
 });
 connection.connect((error) => {
     if (error) {
