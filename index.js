@@ -183,7 +183,7 @@ function sendVerificationEmail(email) {
         port: 587,
         auth: {
             user: "ploishare@gmail.com",
-            pass: "avvrtrwjsopeaase"
+            pass: "gqvmyzfrbhyypljp"
         },
         // tls: {
         //     // do not fail on invalid certs
