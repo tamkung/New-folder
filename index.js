@@ -179,16 +179,16 @@ function sendVerificationEmail(email) {
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         service: "Gmail",
-        secure: true,
-        port: 465,
+        secure: false,
+        port: 587,
         auth: {
             user: "ploishare@gmail.com",
             pass: "avvrtrwjsopeaase"
         },
-        tls: {
-            // do not fail on invalid certs
-            rejectUnauthorized: false,
-        },
+        // tls: {
+        //     // do not fail on invalid certs
+        //     rejectUnauthorized: false,
+        // },
     });
 
     const mailOptions = {
