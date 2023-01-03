@@ -69,7 +69,7 @@ app.post('/signup', (req, res) => {
             connection.query(sql, values, (error) => {
                 if (error) {
                     res.status(500).json({ message: 'Error registering user' });
-                    
+
                 } else {
                     // Send email verification email
                     sendVerificationEmail(email);
@@ -119,7 +119,11 @@ app.post('/signin', (req, res) => {
                 if (bcrypt.compareSync(password, hashedPassword)) {
                     //res.json({ message: 'Logged in successfully' });
                     const token = jwt.sign({ email: results[0].email }, 'secretkey');
-                    res.json({ message: 'Logged in successfully', token: token });
+                    res.json({
+                        status: "OK",
+                        message: 'Logged in successfully',
+                        token: token
+                    });
 
                 } else {
                     res.status(400).json({ message: 'Invalid email or password' });
