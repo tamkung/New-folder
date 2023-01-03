@@ -3,19 +3,20 @@ const bcrypt = require('bcrypt');
 const mysql = require('mysql');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
-const cors = require('cors');
+//const cors = require('cors');
 
 const app = express();
 
-// Parse request body as JSON
-const corsOptions = {
-    origin: 'http://localhost:3000',
-    credentials: true,
-  };
+// const corsOptions = {
+//     origin: 'http://localhost:3000',
+//     credentials: true,
+//   };
 //app.use(cors(corsOptions));
+
+// Parse request body as JSON
 app.use(express.json());
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*'); //หรือใส่แค่เฉพาะ domain ที่ต้องการได้
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -58,7 +59,7 @@ app.get('/', (req, res) => {
         status: "Online",
         message: "Hello Ploishare",
         written_by: "TWT",
-        published_on: "11/11/2565",
+        published_on: "01/01/2023",
     })
 })
 // Create route for registering a new user
@@ -87,7 +88,10 @@ app.post('/signup', (req, res) => {
                 } else {
                     // Send email verification email
                     sendVerificationEmail(email);
-                    res.json({ message: 'User registered successfully' });
+                    res.json({
+                        status: "OK",
+                        message: 'User registered successfully'
+                    });
                 }
             });
         }
