@@ -23,6 +23,13 @@ const connection = mysql.createConnection({
     password: "pscale_pw_fpzwYnqTEK38acUZFp0thOIBDTcgeKWmFOYRXIGpHUr",
     database: "test",
     ssl: {}
+
+    //filess DB
+    // host: "wl7.h.filess.io",
+    // port: 3307,
+    // user: "test_storebegun",
+    // password: "91e5084fc48278128c391c0d69df024a486cf06a",
+    // database: "test_storebegun",
 });
 connection.connect((error) => {
     if (error) {
@@ -62,6 +69,7 @@ app.post('/signup', (req, res) => {
             connection.query(sql, values, (error) => {
                 if (error) {
                     res.status(500).json({ message: 'Error registering user' });
+                    
                 } else {
                     // Send email verification email
                     sendVerificationEmail(email);
@@ -161,7 +169,7 @@ function sendVerificationEmail(email) {
         html: `<h1>Email Confirmation</h1>
         <h2>Hello ${email}</h2>
         <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
-        <a href="https://api-ploishare.cyclic.app/verify?email='` + email + `'"> Click here</a>
+        <a href="https://api-ploishare.cyclic.app/verify?email=${email}"> Click here</a>
         </div>`,
         //html: '<p>Click <a href="https://api-ploishare.cyclic.app/verify?email=' + email + '">here</a> to verify your email</p>'
     };
