@@ -49,6 +49,7 @@ app.get('/', (req, res) => {
 })
 // Create route for registering a new user
 app.post('/signup', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     const { email, password } = req.body;
 
     // Check if the email already exists in the database
@@ -98,6 +99,7 @@ app.get('/verify', (req, res) => {
 });
 
 app.post('/signin', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     const { email, password } = req.body;
 
     // Query the database for the user with the given email
