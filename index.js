@@ -12,8 +12,16 @@ const corsOptions = {
     origin: 'http://localhost:3000',
     credentials: true,
   };
-app.use(cors(corsOptions));
-//app.use(express.json());
+//app.use(cors(corsOptions));
+app.use(express.json());
+
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*'); //หรือใส่แค่เฉพาะ domain ที่ต้องการได้
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
 
 // Connect to MySQL database
 const connection = mysql.createConnection({
@@ -47,7 +55,7 @@ connection.connect((error) => {
 
 app.get('/', (req, res) => {
     return res.send({
-        error: false,
+        status: "Online",
         message: "Hello Ploishare",
         written_by: "TWT",
         published_on: "11/11/2565",
