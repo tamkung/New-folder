@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const mysql = require('mysql');
 const nodemailer = require('nodemailer');
+const smtpTransport = require('nodemailer-smtp-transport');
 const jwt = require('jsonwebtoken');
 //const cors = require('cors');
 
@@ -15,6 +16,7 @@ const app = express();
 
 // Parse request body as JSON
 app.use(express.json());
+
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*'); //หรือใส่แค่เฉพาะ domain ที่ต้องการได้
@@ -180,7 +182,7 @@ app.post('/signout', (req, res) => {
 
 // Function for sending email verification email
 function sendVerificationEmail(email) {
-    const transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport(smtpTransport({
         host: "smtp.gmail.com",
         service: "Gmail",
         secure: false,
@@ -194,7 +196,7 @@ function sendVerificationEmail(email) {
         //     // do not fail on invalid certs
         //     rejectUnauthorized: false,
         // },
-    });
+    }));
 
     const mailOptions = {
         from: '"ปล่อยShare" <noreply@example.com>',
