@@ -41,7 +41,7 @@ app.get('/', (req, res) => {
     })
 })
 // Create route for registering a new user
-app.post('/register', (req, res) => {
+app.post('/signup', (req, res) => {
     const { email, password } = req.body;
 
     // Check if the email already exists in the database
@@ -89,7 +89,7 @@ app.get('/verify', (req, res) => {
     });
 });
 
-app.post('/login', (req, res) => {
+app.post('/signin', (req, res) => {
     const { email, password } = req.body;
 
     // Query the database for the user with the given email
@@ -137,7 +137,7 @@ app.get('/protected', (req, res) => {
     });
 });
 
-app.post('/logout', (req, res) => {
+app.post('/signout', (req, res) => {
     // Clear the JWT from the request header
     req.headers['x-access-token'] = null;
     res.json({ message: 'Logged out successfully' });
@@ -155,10 +155,15 @@ function sendVerificationEmail(email) {
     });
 
     const mailOptions = {
-        from: '"My App" <noreply@example.com>',
+        from: '"ปล่อยShare" <noreply@example.com>',
         to: email,
-        subject: 'Verify your email',
-        html: '<p>Click <a href="http://localhost:8080/verify?email=' + email + '">here</a> to verify your email</p>'
+        subject: 'Please confirm your account',
+        html: `<h1>Email Confirmation</h1>
+        <h2>Hello ${email}</h2>
+        <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
+        <a href="https://api-ploishare.cyclic.app/verify?email='` + email + `'"> Click here</a>
+        </div>`,
+        //html: '<p>Click <a href="https://api-ploishare.cyclic.app/verify?email=' + email + '">here</a> to verify your email</p>'
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
