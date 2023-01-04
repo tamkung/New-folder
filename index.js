@@ -146,7 +146,8 @@ app.post('/signin', (req, res) => {
                     res.json({
                         status: "OK",
                         message: 'Logged in successfully',
-                        token: token
+                        token: token,
+                        email: results.email
                     });
 
                 } else {
