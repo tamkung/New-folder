@@ -251,7 +251,7 @@ function sendVerificationEmail(email) {
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td align="center" class="esd-block-button es-p10t es-p10b"><span class="es-button-border" style="border-radius: 6px;"><a href="https://api-ploishare.cyclic.app/verify?email=${email}" class="es-button" target="_blank" style="background-color: #4CAF50; /* Green */ border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px;">CONFIRM YOUR EMAIL</a></span></td>
+                                                                                    <td align="center" class="esd-block-button es-p10t es-p10b"><span class="es-button-border" style="border-radius: 6px;"><a href="https://ploishare.vercel.app/confirm/${email}" class="es-button" target="_blank" style="background-color: #4CAF50; /* Green */ border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px;">CONFIRM YOUR EMAIL</a></span></td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-p5t es-p5b es-p40r es-p40l es-m-p0r es-m-p0l">
@@ -374,7 +374,7 @@ app.get('/available-cars', (req, res) => {
     );
 });
 
-const port = 8082;
+const port = 8080;
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 });
