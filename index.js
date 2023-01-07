@@ -338,10 +338,34 @@ app.post('/rentals', (req, res) => {
 //         }
 //     });
 // });
+// Rental List
+app.get('/list/users', (req, res) => {
+    connection.query('SELECT * FROM users', (error, results) => {
+        if (error) {
+            // If an error occurred, send a server error response
+            res.status(500).json({ error });
+        } else {
+            // Otherwise, send the results as a JSON array
+            res.json(results);
+        }
+    });
+});
 
+// Rental List
+app.get('/list/rentals', (req, res) => {
+    connection.query('SELECT * FROM rentals', (error, results) => {
+        if (error) {
+            // If an error occurred, send a server error response
+            res.status(500).json({ error });
+        } else {
+            // Otherwise, send the results as a JSON array
+            res.json(results);
+        }
+    });
+});
 
 // Set up the routes for the app
-app.get('/cars', (req, res) => {
+app.get('/list/cars', (req, res) => {
     // Retrieve a list of all cars from the database
     connection.query('SELECT * FROM cars', (error, results) => {
         if (error) {
