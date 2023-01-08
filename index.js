@@ -1,14 +1,17 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const mysql = require('mysql');
-const nodemailer = require('nodemailer');
-const smtpTransport = require('nodemailer-smtp-transport');
+// const nodemailer = require('nodemailer');
+//const smtpTransport = require('nodemailer-smtp-transport');
 const jwt = require('jsonwebtoken');
 
 const bodyParser = require('body-parser');
 const Multer = require('multer');
 const admin = require('firebase-admin');
 const cors = require('cors');
+
+const nodemailer = require("./config/nodemailer.config");
+const DB = require("./config/db.config");
 
 const port = 8080;
 
@@ -19,7 +22,7 @@ const multer = Multer({
     }
 });
 
-const serviceAccount = require('./firebase-config.json');
+const serviceAccount = require('./config/firebase-config.json');
 const FirebaseApp = admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     storageBucket: "gs://ploishare.appspot.com"
@@ -50,26 +53,14 @@ app.use(function (req, res, next) {
 
 // Connect to MySQL database
 const connection = mysql.createConnection({
-    //local DB
-    // host: 'localhost',
-    // port: 3307,
-    // user: 'root',
-    // database: 'test'
-
-    //planetscale DB
-    host: "ap-southeast.connect.psdb.cloud",
-    user: "315tbrkooe37c1c3ih5b",
-    password: "pscale_pw_fpzwYnqTEK38acUZFp0thOIBDTcgeKWmFOYRXIGpHUr",
-    database: "test",
-    ssl: { "rejectUnauthorized": true }
-
-    //filess DB
-    // host: "wl7.h.filess.io",
-    // port: 3307,
-    // user: "test_storebegun",
-    // password: "91e5084fc48278128c391c0d69df024a486cf06a",
-    // database: "test_storebegun",
+    host: DB.HOST,
+    port: DB.PORT,
+    user: DB.USER,
+    password: DB.PASSWORD,
+    database: DB.DB,
+    ssl: DB.SSL
 });
+
 connection.connect((error) => {
     if (error) {
         console.error('Error connecting to database:', error.stack);
@@ -80,7 +71,7 @@ connection.connect((error) => {
 
 app.get('/', (req, res) => {
     return res.send({
-        status: "Online",
+        status: "OK",
         message: "Hello Ploishare",
         written_by: "TWT",
         published_on: "01/01/2023",
@@ -115,7 +106,7 @@ app.post('/signup', (req, res) => {
 
                 } else {
                     // Send email verification email
-                    sendVerificationEmail(email);
+                    nodemailer.sendVerificationEmail(email);
                     res.json({
                         status: "OK",
                         message: 'User registered successfully'
@@ -200,115 +191,6 @@ app.post('/signout', (req, res) => {
     req.headers['x-access-token'] = null;
     res.json({ message: 'Logged out successfully' });
 });
-
-
-// Function for sending email verification email
-function sendVerificationEmail(email) {
-    const transporter = nodemailer.createTransport(smtpTransport({
-        service: "Gmail",
-        host: "smtp.gmail.com",
-        secure: false,
-        port: 465,
-        auth: {
-            user: "ploishare@gmail.com",
-            pass: "gqvmyzfrbhyypljp"
-        },
-        pool: true,
-        tls: {
-            // do not fail on invalid certs
-            rejectUnauthorized: false,
-        },
-    }));
-
-    const mailOptions = {
-        from: '"ปล่อยShare" <noreply@example.com>',
-        to: email,
-        subject: 'Please confirm your account',
-        // html: `<h1>Email Confirmation</h1>
-        // <h2>Hello ${email}</h2>
-        // <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
-        // <a href="https://api-ploishare.cyclic.app/verify?email=${email}"> Click here</a>
-        // </div>`,
-        //html: '<p>Click <a href="https://api-ploishare.cyclic.app/verify?email=' + email + '">here</a> to verify your email</p>'
-        html: `<div class="es-wrapper-color">
-        <!--[if gte mso 9]>
-      <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
-        <v:fill type="tile" color="#fafafa"></v:fill>
-      </v:background>
-    <![endif]-->
-        <table width="100%" cellspacing="0" cellpadding="0">
-            <tbody>
-                <tr>
-                    <td class="esd-email-paddings" valign="top">
-                        <table cellpadding="0" cellspacing="0" class="es-content esd-footer-popover" align="center">
-                            <tbody>
-                                <tr>
-                                    <td class="esd-stripe" align="center">
-                                        <table bgcolor="#ffffff" class="es-content-body" align="center" cellpadding="0" cellspacing="0" width="600">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="esd-structure es-p30t es-p30b es-p20r es-p20l" align="left">
-                                                        <table cellpadding="0" cellspacing="0" width="100%">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td width="560" class="esd-container-frame" align="center" valign="top">
-                                                                        <table cellpadding="0" cellspacing="0" width="100%">
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td align="center" class="esd-block-image es-p10t es-p10b" style="font-size: 0px;"><a target="_blank"><img src="https://ayiqmq.stripocdn.email/content/guids/CABINET_67e080d830d87c17802bd9b4fe1c0912/images/55191618237638326.png" alt style="display: block;" width="100"></a></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td align="center" class="esd-block-text es-p10b es-m-txt-c">
-                                                                                        <h1 style="font-size: 46px; line-height: 100%;">Confirm Your Email</h1>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td align="center" class="esd-block-text es-p5t es-p5b es-p40r es-p40l es-m-p0r es-m-p0l">
-                                                                                        <p>You’ve received this message because your email address has been registered with our site. Please click the button below to verify your email address and confirm that you are the owner of this account.</p>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td align="center" class="esd-block-text es-p10t es-p5b">
-                                                                                        <p>If you did not register with us, please disregard this email.</p>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td align="center" class="esd-block-button es-p10t es-p10b"><span class="es-button-border" style="border-radius: 6px;"><a href="https://ploishare.vercel.app/confirm/${email}" class="es-button" target="_blank" style="background-color: #4CAF50; /* Green */ border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px;">CONFIRM YOUR EMAIL</a></span></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td align="center" class="esd-block-text es-p5t es-p5b es-p40r es-p40l es-m-p0r es-m-p0l">
-                                                                                        <p>Once confirmed, this email will be uniquely associated with your account.</p>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>`,
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-}
 
 //=======================================================
 // Create a new rental
