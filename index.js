@@ -4,19 +4,41 @@ const mysql = require('mysql');
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 const jwt = require('jsonwebtoken');
-//const cors = require('cors');
+
+const bodyParser = require('body-parser');
+const Multer = require('multer');
+const admin = require('firebase-admin');
+const cors = require('cors');
+
+const port = 8080;
+
+const multer = Multer({
+    storage: Multer.memoryStorage(),
+    limits: {
+        fileSize: 5 * 1024 * 1024
+    }
+});
+
+const serviceAccount = require('./firebase-config.json');
+const FirebaseApp = admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    storageBucket: "gs://ploishare.appspot.com"
+});
+const storage = FirebaseApp.storage();
+const bucket = storage.bucket();
 
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const corsOptions = {
     origin: '*',
     credentials: true,
 };
-//app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 // Parse request body as JSON
 app.use(express.json());
-
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*'); //หรือใส่แค่เฉพาะ domain ที่ต้องการได้
@@ -398,7 +420,78 @@ app.get('/available-cars', (req, res) => {
     );
 });
 
-const port = 8080;
+
+app.post('/add/car', (req, res) => {
+    const { id, make, model, year, color, rental_rate, image } = req.body;
+    const sql = 'SELECT * FROM cars WHERE id = ?';
+    const values = [id];
+    connection.query(sql, values, (error, results) => {
+        if (error) {
+            res.status(500).json({ message: 'Error checking for duplicate id' });
+        } else if (results.length > 0) {
+            res.status(400).json({ message: 'id already exists' });
+        } else {
+
+            // Insert the new user into the database
+            const sql = 'INSERT INTO cars (id, make, model, year, color, rental_rate, image) VALUES (?, ?,?, ?, ?, ?, ?)';
+            const values = [id, make, model, year, color, rental_rate, image];
+            connection.query(sql, values, (error) => {
+                if (error) {
+                    res.status(500).json({ message: 'Error add car' });
+
+                } else {
+                    res.json({
+                        status: "OK",
+                        message: 'Car added successfully'
+                    });
+                }
+            });
+        }
+    });
+});
+//upload car
+// app.post("/add/car", jsonParser, function (req, res, next) {
+//     sqlConnect.query(
+//         "INSERT INTO cars (RiceID,RiceDepositor,RiceCategory,RiceQuantity,RiceReturn,RiceEntryDate,RiceIssueDate) VALUES (?,?,?,?,?,?,?)",
+//         [
+//             req.body.RiceID,
+//             req.body.RiceDepositor,
+//             req.body.RiceCategory,
+//             req.body.RiceQuantity,
+//             req.body.RiceReturn,
+//             req.body.RiceEntryDate,
+//             null,
+//         ],
+//         (err, result, fields) => {
+//             if (err) {
+//                 return res.json({ status: "error", message: err });
+//             } else {
+//                 res.json({ status: "add ok" });
+//             }
+//         }
+//     );
+// });
+//upload file
+app.post('/upload/firebase', multer.single('img'), (req, res) => {
+    var publicUrl
+    const folder = 'uploads'
+    const fileName = `${folder}/${Date.now()}`
+    const fileUpload = bucket.file(fileName);
+    const blobStream = fileUpload.createWriteStream({
+        metadata: {
+            contentType: "image/png",
+        }
+    });
+    blobStream.on('error', (err) => {
+        res.status(405).json(err);
+    });
+    blobStream.on('finish', () => {
+        publicUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(fileUpload.name)}?alt=media`;
+        res.status(200).send(publicUrl);
+    });
+    blobStream.end(req.file.buffer);
+});
+
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 });
