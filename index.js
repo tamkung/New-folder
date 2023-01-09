@@ -161,6 +161,7 @@ app.post('/signin', (req, res) => {
                         message: 'Logged in successfully',
                         token: token,
                         email: results[0].email,
+                        type: results[0].type,
                     });
                 } else {
                     res.status(400).json({ message: 'Invalid email or password' });
