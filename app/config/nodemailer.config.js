@@ -1,6 +1,7 @@
 require("dotenv").config();
 const nodemailer = require("nodemailer");
 const smtpTransport = require('nodemailer-smtp-transport');
+const auth = require("../config/auth.config");
 
 module.exports.sendVerificationEmail = (email) => {
     const transporter = nodemailer.createTransport(smtpTransport({
@@ -9,8 +10,8 @@ module.exports.sendVerificationEmail = (email) => {
         secure: false,
         port: 465,
         auth: {
-            user: "ploishare@gmail.com",
-            pass: "jztocuzirmjgqqsp"
+            user: auth.user,
+            pass: auth.pass
         },
         pool: true,
         tls: {
