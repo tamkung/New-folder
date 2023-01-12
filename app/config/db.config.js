@@ -31,7 +31,7 @@ const db_config = {
     port: 3306,
     user: "username",
     password: "password",
-    database: "test",
+    database: "ploishare",
     ssl: null
 
 };
