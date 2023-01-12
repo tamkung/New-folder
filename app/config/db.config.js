@@ -7,24 +7,32 @@ const db_config = {
     // port: 3307,
     // user: 'root',
     // password: null,
-    // db: 'test',
+    // database: 'test',
     // ssl: null
 
     //planetscale DB
-    host: "ap-southeast.connect.psdb.cloud",
-    port: null,
-    user: "315tbrkooe37c1c3ih5b",
-    password: "pscale_pw_fpzwYnqTEK38acUZFp0thOIBDTcgeKWmFOYRXIGpHUr",
-    db: "test",
-    ssl: { "rejectUnauthorized": true }
+    // host: "ap-southeast.connect.psdb.cloud",
+    // port: null,
+    // user: "315tbrkooe37c1c3ih5b",
+    // password: "pscale_pw_fpzwYnqTEK38acUZFp0thOIBDTcgeKWmFOYRXIGpHUr",
+    // database: "test",
+    // ssl: { "rejectUnauthorized": true }
 
     //filess DB
     // host: "wl7.h.filess.io",
     // port: 3307,
     // user: "test_storebegun",
     // password: "91e5084fc48278128c391c0d69df024a486cf06a",
-    // db: "test_storebegun",
+    // database: "test_storebegun",
     // ssl: null
+
+    //aws DB
+    host: "54.179.161.87",
+    port: 3306,
+    user: "username",
+    password: "password",
+    database: "test",
+    ssl: null
 
 };
 connection = mysql.createPool(db_config);
