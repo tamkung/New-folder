@@ -7,7 +7,7 @@ const db_config = {
     // port: 3307,
     // user: 'root',
     // password: null,
-    // database: 'test',
+    // database: 'ploishare',
     // ssl: null
 
     //planetscale DB

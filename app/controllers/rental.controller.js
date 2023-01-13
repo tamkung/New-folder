@@ -2,19 +2,19 @@ const connection = require("../config/db.config");
 
 exports.addcar = async (req, res) => {
     try {
-        const { id, make, model, year, color, rental_rate, image } = req.body;
-        const sql = 'SELECT * FROM cars WHERE id = ?';
-        const values = [id];
+        const { license, province, brand, color, detail, image } = req.body;
+        const sql = 'SELECT * FROM cars WHERE license = ?';
+        const values = [license];
         connection.query(sql, values, (error, results) => {
             if (error) {
-                res.status(500).json({ message: 'Error checking for duplicate id' });
+                res.status(500).json({ message: 'Error checking for duplicate license' });
             } else if (results.length > 0) {
-                res.status(400).json({ message: 'id already exists' });
+                res.status(400).json({ message: 'license already exists' });
             } else {
 
                 // Insert the new user into the database
-                const sql = 'INSERT INTO cars (id, make, model, year, color, rental_rate, image) VALUES (?, ?,?, ?, ?, ?, ?)';
-                const values = [id, make, model, year, color, rental_rate, image];
+                const sql = 'INSERT INTO cars (license, province, brand, color, detail, image) VALUES (?,?, ?, ?, ?, ?)';
+                const values = [license, province, brand, color, detail, image];
                 connection.query(sql, values, (error) => {
                     if (error) {
                         res.status(500).json({ message: 'Error add car' });
@@ -62,7 +62,7 @@ exports.getavailablecars = async (req, res) => {
         const { startDateTime, endDateTime } = req.query;
         // Find cars that are available for rent within the given time period
         connection.query(
-            'SELECT * FROM cars WHERE id NOT IN (SELECT car_id FROM rentals WHERE start_date_time <= ? AND end_date_time >= ?)',
+            'SELECT * FROM cars WHERE id NOT IN (SELECT cLicense FROM booking WHERE startDateTime <= ? AND endDateTime >= ?)',
             [endDateTime, startDateTime],
             (error, results) => {
                 if (error) {
@@ -83,7 +83,7 @@ exports.addbooking = async (req, res) => {
     try {
         const { carId, startDateTime, endDateTime, rate } = req.body;
         const day = Math.round((new Date(endDateTime) - new Date(startDateTime)) / 8.64e7) + 1;
-        const query = 'INSERT INTO rentals (car_id, start_date_time, end_date_time, rate, day) VALUES (?, ?, ?, ?, ?)';
+        const query = 'INSERT INTO booking (startDateTime, endDateTime, cLicense, day) VALUES (?, ?, ?, ?, ?)';
         const values = [carId, startDateTime, endDateTime, rate, day];
         connection.query(query, values, (error, results) => {
             if (error) {
@@ -102,7 +102,7 @@ exports.addbooking = async (req, res) => {
 };
 exports.getbooking = async (req, res) => {
     try {
-        connection.query('SELECT * FROM rentals', (error, results) => {
+        connection.query('SELECT * FROM booking', (error, results) => {
             if (error) {
                 // If an error occurred, send a server error response
                 res.status(500).json({ error });
