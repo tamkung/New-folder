@@ -17,7 +17,7 @@ router.post("/addcar", addcar);
 
 router.get("/getcar", getcar);
 
-// router.get("/getcarbyid", getcarbyid);
+router.get("/getcarbyid/:id", getcarbyid);
 
 // router.put("/updatecar", updatecar);
 

@@ -50,7 +50,22 @@ exports.getcar = async (req, res) => {
     };
 };
 
-exports.getcarbyid = async (req, res) => { };
+exports.getcarbyid = async (req, res) => {
+    try {
+        const license = req.params.id;
+        connection.query('SELECT * FROM cars WHERE license = ?',[license], (error, results) => {
+            if (error) {
+                // If an error occurred, send a server error response
+                res.status(500).json({ error });
+            } else {
+                // Otherwise, send the results as a JSON array
+                res.json(results.length > 0 ? results[0] : { message: 'Car not found' });
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Error get car' });
+    };
+};
 
 exports.updatecar = async (req, res) => { };
 
