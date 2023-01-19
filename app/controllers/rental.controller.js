@@ -2,7 +2,7 @@ const connection = require("../config/db.config");
 
 exports.addcar = async (req, res) => {
     try {
-        const { license, province, brand, color, detail, image } = req.body;
+        const { license, province, brand, color, seat, detail, image } = req.body;
         const sql = 'SELECT * FROM cars WHERE license = ?';
         const values = [license];
         connection.query(sql, values, (error, results) => {
@@ -13,8 +13,8 @@ exports.addcar = async (req, res) => {
             } else {
 
                 // Insert the new user into the database
-                const sql = 'INSERT INTO cars (license, province, brand, color, detail, image) VALUES (?,?, ?, ?, ?, ?)';
-                const values = [license, province, brand, color, detail, image];
+                const sql = 'INSERT INTO cars (license, province, brand, color, seat, detail, image) VALUES (?, ?, ?, ?, ?, ?, ?)';
+                const values = [license, province, brand, color, seat, detail, image];
                 connection.query(sql, values, (error) => {
                     if (error) {
                         res.status(500).json({ message: 'Error add car' });
@@ -53,7 +53,7 @@ exports.getcar = async (req, res) => {
 exports.getcarbyid = async (req, res) => {
     try {
         const license = req.params.id;
-        connection.query('SELECT * FROM cars WHERE license = ?',[license], (error, results) => {
+        connection.query('SELECT * FROM cars WHERE license = ?', [license], (error, results) => {
             if (error) {
                 // If an error occurred, send a server error response
                 res.status(500).json({ error });
