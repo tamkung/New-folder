@@ -17,7 +17,7 @@ exports.addcar = async (req, res) => {
                 const values = [license, province, brand, color, seat, detail, image];
                 connection.query(sql, values, (error) => {
                     if (error) {
-                        res.status(500).json({ message: 'Error add car' });
+                        res.status(500).json({ message: 'Server Error!!!' });
 
                     } else {
                         res.json({
@@ -29,7 +29,7 @@ exports.addcar = async (req, res) => {
             }
         });
     } catch (error) {
-        res.status(500).json({ message: 'Error add car' });
+        res.status(500).json({ message: 'Server Error!!!' });
     }
 };
 
@@ -46,7 +46,7 @@ exports.getcar = async (req, res) => {
             }
         });
     } catch (error) {
-        res.status(500).json({ message: 'Error get car' });
+        res.status(500).json({ message: 'Server Error!!!' });
     };
 };
 
@@ -63,13 +63,28 @@ exports.getcarbyid = async (req, res) => {
             }
         });
     } catch (error) {
-        res.status(500).json({ message: 'Error get car' });
+        res.status(500).json({ message: 'Server Error!!!' });
     };
 };
 
 exports.updatecar = async (req, res) => { };
 
-exports.deletecar = async (req, res) => { };
+exports.deletecar = async (req, res) => {
+    try {
+        const license = req.params.id;
+        connection.query('DELETE FROM cars WHERE license = ?', [license], (error, results) => {
+            if (error) {
+                // If an error occurred, send a server error response
+                res.status(500).json({ error });
+            } else {
+                // Otherwise, send the results as a JSON array
+                res.send({ message: 'Delete Car Success.' });
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error!!!' });
+    };
+};
 
 exports.getavailablecars = async (req, res) => {
     try {
@@ -112,7 +127,7 @@ exports.addbooking = async (req, res) => {
             }
         });
     } catch (error) {
-        res.status(500).json({ message: 'Error add booking' });
+        res.status(500).json({ message: 'Server Error!!!' });
     };
 };
 exports.getbooking = async (req, res) => {
@@ -127,7 +142,7 @@ exports.getbooking = async (req, res) => {
             }
         });
     } catch (error) {
-        res.status(500).json({ message: 'Error get booking' });
+        res.status(500).json({ message: 'Server Error!!!' });
     };
 };
 
