@@ -11,12 +11,12 @@ const db_config = {
     // ssl: null
 
     //planetscale DB
-    host: "ap-southeast.connect.psdb.cloud",
-    port: null,
-    user: "315tbrkooe37c1c3ih5b",
-    password: "pscale_pw_fpzwYnqTEK38acUZFp0thOIBDTcgeKWmFOYRXIGpHUr",
-    database: "test",
-    ssl: { "rejectUnauthorized": true }
+    // host: "ap-southeast.connect.psdb.cloud",
+    // port: null,
+    // user: "315tbrkooe37c1c3ih5b",
+    // password: "pscale_pw_fpzwYnqTEK38acUZFp0thOIBDTcgeKWmFOYRXIGpHUr",
+    // database: "test",
+    // ssl: { "rejectUnauthorized": true }
 
     //filess DB
     // host: "wl7.h.filess.io",
@@ -33,6 +33,14 @@ const db_config = {
     // password: "password",
     // database: "ploishare",
     // ssl: null
+
+    //alibaba DB
+    host: "8.219.79.249",
+    port: 3306,
+    user: "username",
+    password: "password",
+    database: "ploishare",
+    ssl: null
 
 };
 connection = mysql.createPool(db_config);
