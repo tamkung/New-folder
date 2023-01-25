@@ -8,11 +8,8 @@ const {
     updatecar,
     deletecar,
     getavailablecars,
-    addbooking,
-    getbooking
-} = require('../controllers/rental.controller');
+} = require('../controllers/car.controller');
 
-// Car ================================================================================================
 router.post("/addcar", addcar);
 
 router.get("/getcar", getcar);
@@ -24,10 +21,5 @@ router.get("/getcarbyid/:id", getcarbyid);
 router.post("/deletecar/:id", deletecar);
 
 router.get("/getavailablecars", getavailablecars);
-
-// Rental ================================================================================================
-router.post("/addbooking", addbooking);
-
-router.get("/getbooking", getbooking);
 
 module.exports = router;
