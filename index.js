@@ -75,6 +75,41 @@ app.post('/upload/firebase', multer.single('img'), (req, res) => {
     blobStream.end(req.file.buffer);
 });
 
+
+app.get('/get-files', async (req, res) => {
+    try {
+        const [files] = await bucket.getFiles({ prefix: "uploads/" });
+
+        const fileData = await Promise.all(
+            files.map(async (file) => {
+                return {
+                    name: file.name.replace("uploads/", ""),
+                    type: file.metadata.contentType,
+                    url: `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(file.name)}?alt=media`,
+                };
+            })
+        );
+        res.send(fileData);
+        console.log(fileData.length);
+    } catch (error) {
+        console.error(error); // log the error
+        res.status(500).send({ error: 'Internal Server Error' });
+    }
+});
+
+app.delete('/file/:fileId', async (req, res) => {
+    try {
+        const fileId = req.params.fileId;
+        const storage = admin.storage();
+        const file = storage.bucket().file(`uploads/${fileId}`);
+        await file.delete();
+        res.send({ message: "File deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ error: 'Internal Server Error' });
+    }
+});
+
 // Start
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
