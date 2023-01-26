@@ -13,7 +13,7 @@ exports.addcar = async (req, res) => {
             } else {
 
                 // Insert the new user into the database
-                const sql = 'INSERT INTO cars (license, province, brand, model color, seat, detail, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+                const sql = 'INSERT INTO cars (license, province, brand, model, color, seat, detail, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
                 const values = [license, province, brand, model, color, seat, detail, image];
                 connection.query(sql, values, (error) => {
                     if (error) {
