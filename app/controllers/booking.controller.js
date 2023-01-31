@@ -2,10 +2,10 @@ const connection = require("../config/db.config");
 
 exports.addbooking = async (req, res) => {
     try {
-        const { carId, startDateTime, endDateTime, rate } = req.body;
+        const { id, uName, empoyeeNo, uPhone, uSect, uPart, note, startDateTime, endDateTime, cLicense } = req.body;
         const day = Math.round((new Date(endDateTime) - new Date(startDateTime)) / 8.64e7) + 1;
-        const query = 'INSERT INTO booking (startDateTime, endDateTime, cLicense, day) VALUES (?, ?, ?, ?, ?)';
-        const values = [carId, startDateTime, endDateTime, rate, day];
+        const query = 'INSERT INTO booking (id, uName, empoyeeNo, uPhone, uSect, uPart, note, startDateTime, endDateTime, cLicense, day) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        const values = [id, uName, empoyeeNo, uPhone, uSect, uPart, note, startDateTime, endDateTime, cLicense, day];
         connection.query(query, values, (error, results) => {
             if (error) {
                 if (error.code === 'ER_DUP_ENTRY') {
@@ -14,7 +14,10 @@ exports.addbooking = async (req, res) => {
                     res.status(500).json({ error });
                 }
             } else {
-                res.status(201).json({ results });
+                res.json({
+                    status: "OK",
+                    message: 'Booking added successfully'
+                });
             }
         });
     } catch (error) {
