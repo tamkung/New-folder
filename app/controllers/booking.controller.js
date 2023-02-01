@@ -1,4 +1,8 @@
 const connection = require("../config/db.config");
+const request = require('request');
+
+const url_line_notify = "https://notify-api.line.me/api/notify";
+const TOKEN = "3gyNVnhIk7bJOOAXNCqsCyl5Y4skkf3fz0HmSFknJff"
 
 exports.addbooking = async (req, res) => {
     try {
@@ -14,6 +18,25 @@ exports.addbooking = async (req, res) => {
                     res.status(500).json({ error });
                 }
             } else {
+                request({
+                    method: 'POST',
+                    uri: url_line_notify,
+                    header: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                    auth: {
+                        bearer: TOKEN,
+                    },
+                    form: {
+                        message: `เลขที่ใบจอง: ${id} \nชื่อผู้จอง: ${uName} \nเบอร์โทร: ${uPhone} \nวันที่ใช้รถ: ${startDateTime} \nวันที่คืนรถ: ${endDateTime} \nทะเบียนรถ: ${cLicense} \nจังหวัด: ${province} \nหมายเหตุ: ${note}`,
+                    },
+                }, (err, httpResponse, body) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        console.log(body)
+                    }
+                });
                 res.json({
                     status: "OK",
                     message: 'Booking added successfully'
