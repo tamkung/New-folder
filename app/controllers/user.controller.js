@@ -1,6 +1,6 @@
 const connection = require("../config/db.config");
 
-exports.getuser = async (req, res) => {
+exports.getUser = async (req, res) => {
     try {
         connection.query('SELECT email FROM users WHERE type <> "admin"', (error, results) => {
             if (error) {

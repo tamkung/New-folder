@@ -2,15 +2,18 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    addbooking,
-    getbooking,
-    getbookingbyemail
+    addBooking,
+    getBooking,
+    getBookingByEmail,
+    updateBookingApprove
 } = require('../controllers/booking.controller');
 
-router.post("/addbooking", addbooking);
+router.post("/addbooking", addBooking);
 
-router.get("/getbooking", getbooking);
+router.get("/getbooking", getBooking);
 
-router.get("/getbookingbyemail/:id", getbookingbyemail);
+router.get("/getbookingbyemail/:id", getBookingByEmail);
+
+router.post("/updatebookingapprove", updateBookingApprove);
 
 module.exports = router;

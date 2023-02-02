@@ -2,24 +2,24 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    addcar,
-    getcar,
-    getcarbyid,
-    updatecar,
-    deletecar,
-    getavailablecars,
+    addCar,
+    getCar,
+    getCarById,
+    updateCar,
+    deleteCar,
+    getAvailableCars,
 } = require('../controllers/car.controller');
 
-router.post("/addcar", addcar);
+router.post("/addcar", addCar);
 
-router.get("/getcar", getcar);
+router.get("/getcar", getCar);
 
-router.get("/getcarbyid/:id", getcarbyid);
+router.get("/getcarbyid/:id", getCarById);
 
-router.post("/updatecar", updatecar);
+router.post("/updatecar", updateCar);
 
-router.post("/deletecar/:id", deletecar);
+router.post("/deletecar/:id", deleteCar);
 
-router.get("/getavailablecars", getavailablecars);
+router.get("/getavailablecars", getAvailableCars);
 
 module.exports = router;

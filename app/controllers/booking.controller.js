@@ -5,7 +5,7 @@ const url_line_notify = "https://notify-api.line.me/api/notify";
 //const TOKEN = "3gyNVnhIk7bJOOAXNCqsCyl5Y4skkf3fz0HmSFknJff" 
 const TOKEN = "VDjb3kVwPw1el08RIMeUYafc7sZKaMLYoXmjnvliBvF"
 
-exports.addbooking = async (req, res) => {
+exports.addBooking = async (req, res) => {
     try {
         const { id, province, uName, empoyeeNo, uEmail, uPhone, uSect, uPart, note, startDateTime, endDateTime, bookingDate, cLicense, cName } = req.body;
         const day = Math.round((new Date(endDateTime) - new Date(startDateTime)) / 8.64e7) + 1;
@@ -49,7 +49,7 @@ exports.addbooking = async (req, res) => {
     };
 };
 
-exports.getbooking = async (req, res) => {
+exports.getBooking = async (req, res) => {
     try {
         connection.query('SELECT * FROM booking', (error, results) => {
             if (error) {
@@ -65,7 +65,7 @@ exports.getbooking = async (req, res) => {
     };
 };
 
-exports.getbookingbyemail = async (req, res) => {
+exports.getBookingByEmail = async (req, res) => {
     try {
         const uEmail = req.params.id;
         connection.query('SELECT * FROM booking WHERE uEmail = ?', [uEmail], (error, results) => {
@@ -75,6 +75,24 @@ exports.getbookingbyemail = async (req, res) => {
             } else {
                 // Otherwise, send the results as a JSON array
                 res.json(results);
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error!!!' });
+    };
+};
+
+exports.updateBookingApprove = async (req, res) => {
+    try {
+        const { id, status } = req.body;
+        console.log(id, status);
+        connection.query('UPDATE booking SET status = ? WHERE id = ?', [status, id], (error, results) => {
+            if (error) {
+                // If an error occurred, send a server error response
+                res.status(500).json({ error });
+            } else {
+                // Otherwise, send the results as a JSON array
+                res.send({ message: 'Update Booking Success.' });
             }
         });
     } catch (error) {

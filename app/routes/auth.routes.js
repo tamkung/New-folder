@@ -2,18 +2,18 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  signup,
-  signin,
-  signout,
+  signUp,
+  signIn,
+  signOut,
   verified,
   protected
 } = require('../controllers/auth.controller');
 
-router.post("/auth/signup", signup);
+router.post("/auth/signup", signUp);
 
-router.post("/auth/signin", signin);
+router.post("/auth/signin", signIn);
 
-router.post("/auth/signout", signout);
+router.post("/auth/signout", signOut);
 
 router.get("/auth/verified", verified);
 

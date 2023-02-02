@@ -1,6 +1,6 @@
 const connection = require("../config/db.config");
 
-exports.addcar = async (req, res) => {
+exports.addCar = async (req, res) => {
     try {
         const { license, province, brand, model, color, seat, detail, image } = req.body;
         const sql = 'SELECT * FROM cars WHERE license = ?';
@@ -33,7 +33,7 @@ exports.addcar = async (req, res) => {
     }
 };
 
-exports.getcar = async (req, res) => {
+exports.getCar = async (req, res) => {
     try {
         // Retrieve a list of all cars from the database
         connection.query('SELECT * FROM cars', (error, results) => {
@@ -50,7 +50,7 @@ exports.getcar = async (req, res) => {
     };
 };
 
-exports.getcarbyid = async (req, res) => {
+exports.getCarById = async (req, res) => {
     try {
         const license = req.params.id;
         connection.query('SELECT * FROM cars WHERE license = ?', [license], (error, results) => {
@@ -67,7 +67,7 @@ exports.getcarbyid = async (req, res) => {
     };
 };
 
-exports.updatecar = async (req, res) => {
+exports.updateCar = async (req, res) => {
     try {
         const { license, status } = req.body;
         console.log(license, status);
@@ -85,7 +85,7 @@ exports.updatecar = async (req, res) => {
     };
 };
 
-exports.deletecar = async (req, res) => {
+exports.deleteCar = async (req, res) => {
     try {
         const license = req.params.id;
         connection.query('DELETE FROM cars WHERE license = ?', [license], (error, results) => {
@@ -102,7 +102,7 @@ exports.deletecar = async (req, res) => {
     };
 };
 
-exports.getavailablecars = async (req, res) => {
+exports.getAvailableCars = async (req, res) => {
     try {
         // Retrieve the start and end dates and times from the query string
         const { startDateTime, endDateTime } = req.query;

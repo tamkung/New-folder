@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const nodemailer = require("../config/nodemailer.config");
 const connection = require("../config/db.config");
 
-exports.signup = async (req, res) => {
+exports.signUp = async (req, res) => {
     try {
         const { email, password } = req.body;
         // sendVerificationEmail(email);
@@ -46,7 +46,7 @@ exports.signup = async (req, res) => {
     }
 };
 
-exports.signin = async (req, res) => {
+exports.signIn = async (req, res) => {
     try {
         const { email, password } = req.body;
         // Query the database for the user with the given email
@@ -122,7 +122,7 @@ module.exports.protected = async (req, res) => {
     }
 };
 
-module.exports.signout = async (req, res) => {
+module.exports.signOut = async (req, res) => {
     try {
         // Clear the JWT from the request header
         req.headers['x-access-token'] = null;

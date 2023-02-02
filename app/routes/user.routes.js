@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    getuser
+    getUser
 } = require('../controllers/user.controller');
 
 
-router.get("/getuser", getuser);
+router.get("/getuser", getUser);
 
 module.exports = router;
