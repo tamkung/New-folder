@@ -99,3 +99,20 @@ exports.updateBookingApprove = async (req, res) => {
         res.status(500).json({ message: 'Server Error!!!' });
     };
 };
+
+exports.searchBookingByDateRange = async (req, res) => {
+    try {
+        const { startDate, endDate } = req.body;
+        connection.query('SELECT * FROM booking WHERE bookingDate BETWEEN ? AND ?', [startDate, endDate], (error, results) => {
+            if (error) {
+                // If an error occurred, send a server error response
+                res.status(500).json({ error });
+            } else {
+                // Otherwise, send the results as a JSON array
+                res.json(results);
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error!!!' });
+    };
+}
