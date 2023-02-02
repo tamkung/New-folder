@@ -20,6 +20,6 @@ router.post("/updatecar", updateCar);
 
 router.post("/deletecar/:id", deleteCar);
 
-router.get("/getavailablecars", getAvailableCars);
+router.post("/getavailablecars", getAvailableCars);
 
 module.exports = router;
