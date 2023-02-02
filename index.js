@@ -10,11 +10,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-// parse requests of content-type - application/json
 app.use(bodyParser.json());
-// parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
-// Parse request body as JSON
 app.use(express.json());
 
 app.use(function (req, res, next) {
@@ -25,7 +22,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-readdirSync("./app/routes").map((r) => app.use("/api", require("./app/routes/" + r)));
+readdirSync("./app/routes").map((route) => app.use("/api", require("./app/routes/" + route)));
 
 app.get('/', (req, res) => {
     return res.send({
@@ -36,7 +33,6 @@ app.get('/', (req, res) => {
     })
 })
 
-// Start
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);

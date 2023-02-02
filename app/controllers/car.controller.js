@@ -105,10 +105,10 @@ exports.deleteCar = async (req, res) => {
 exports.getAvailableCars = async (req, res) => {
     try {
         // Retrieve the start and end dates and times from the query string
-        const { startDateTime, endDateTime } = req.query;
+        const { startDateTime, endDateTime } = req.body;
         // Find cars that are available for rent within the given time period
         connection.query(
-            'SELECT * FROM cars WHERE license NOT IN (SELECT cLicense FROM booking WHERE startDateTime <= ? AND endDateTime >= ?) AND status = true',
+            'SELECT * FROM cars WHERE license NOT IN (SELECT cLicense FROM booking WHERE startDateTime <= ? AND endDateTime >= ? AND finish != 1) AND status = true',
             [endDateTime, startDateTime],
             (error, results) => {
                 if (error) {
