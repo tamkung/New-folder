@@ -92,7 +92,43 @@ exports.updateBookingApprove = async (req, res) => {
                 res.status(500).json({ error });
             } else {
                 // Otherwise, send the results as a JSON array
-                res.send({ message: 'Update Booking Success.' });
+                res.send({ message: 'Update Status Success.' });
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error!!!' });
+    };
+};
+
+exports.updateBookingActive = async (req, res) => {
+    try {
+        const { id, active } = req.body;
+        console.log(id, active);
+        connection.query('UPDATE booking SET active = ? WHERE id = ?', [active, id], (error, results) => {
+            if (error) {
+                // If an error occurred, send a server error response
+                res.status(500).json({ error });
+            } else {
+                // Otherwise, send the results as a JSON array
+                res.send({ message: 'Update Active Success.' });
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error!!!' });
+    };
+};
+
+exports.updateBookingFinish = async (req, res) => {
+    try {
+        const { id, finish } = req.body;
+        console.log(id, finish);
+        connection.query('UPDATE booking SET finish = ? WHERE id = ?', [finish, id], (error, results) => {
+            if (error) {
+                // If an error occurred, send a server error response
+                res.status(500).json({ error });
+            } else {
+                // Otherwise, send the results as a JSON array
+                res.send({ message: 'Update Finish Success.' });
             }
         });
     } catch (error) {
