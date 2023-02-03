@@ -1,5 +1,5 @@
 module.exports = {
-    secret: "zfaplgctwkljpqrn",
+    secret: "qazxswedcvfrtgbnhyujmkiolp",
     user: "ploishare@gmail.com",
     pass: "jztocuzirmjgqqsp",
 };

@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 
 const nodemailer = require("../config/nodemailer.config");
 const connection = require("../config/db.config");
+const config = require("../config/auth.config.js");
 
 exports.signUp = async (req, res) => {
     try {
@@ -67,7 +68,9 @@ exports.signIn = async (req, res) => {
                     const hashedPassword = results[0].password;
                     if (bcrypt.compareSync(password, hashedPassword)) {
                         //res.json({ message: 'Logged in successfully' });
-                        const token = jwt.sign({ email: results[0].email }, 'secretkey');
+                        const token = jwt.sign({ email: results[0].email }, config.secret, {
+                            expiresIn: 86400 // 24 hours
+                        });
                         res.json({
                             status: "OK",
                             message: 'Logged in successfully',
@@ -109,7 +112,7 @@ module.exports.protected = async (req, res) => {
         // Get the JWT from the request header
         const token = req.headers['x-access-token'];
         // Verify the JWT
-        jwt.verify(token, 'secretkey', (error, decoded) => {
+        jwt.verify(token, config.secret, (error, decoded) => {
             if (error) {
                 res.status(401).json({ message: 'Not authorized' });
             } else {
