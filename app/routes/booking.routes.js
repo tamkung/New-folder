@@ -5,8 +5,8 @@ const {
     addBooking,
     getBooking,
     getBookingByEmail,
-    updateBookingApprove,
     searchBookingByDateRange,
+    updateBookingStatus,
     updateBookingActive,
     updateBookingFinish
 } = require('../controllers/booking.controller');
@@ -17,11 +17,11 @@ router.get("/getbooking", getBooking);
 
 router.get("/getbookingbyemail/:id", getBookingByEmail);
 
-router.post("/updatebookingapprove", updateBookingApprove);
+router.post("/updatebookingstatus", updateBookingStatus);
 
-router.post("/updatebookingactive", updateBookingActive);
+// router.post("/updatebookingactive", updateBookingActive);
 
-router.post("updatebookingfinish", updateBookingFinish);
+// router.post("updatebookingfinish", updateBookingFinish);
 
 router.post("/searchbookingbydaterange", searchBookingByDateRange);
 

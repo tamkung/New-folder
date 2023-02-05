@@ -14,7 +14,7 @@ exports.addBooking = async (req, res) => {
         connection.query(query, values, (error, results) => {
             if (error) {
                 if (error.code === 'ER_DUP_ENTRY') {
-                    res.status(400).json({ error: 'Duplicate booking' });
+                    res.status(400).json({ error });
                 } else {
                     res.status(500).json({ error });
                 }
@@ -29,7 +29,7 @@ exports.addBooking = async (req, res) => {
                         bearer: TOKEN,
                     },
                     form: {
-                        message: `เลขที่ใบจอง: ${id} \nชื่อผู้จอง: ${uName} \nเบอร์โทร: ${uPhone} \nวันที่ใช้รถ: ${startDateTime} \nวันที่คืนรถ: ${endDateTime} \nทะเบียนรถ: ${cLicense} \nชื่อรถ: ${cName} \nจังหวัด: ${province} \nหมายเหตุ: ${note}`,
+                        message: `เลขที่ใบจอง: ${id} \nชื่อผู้จอง: ${uName} \nรหัสพนักงาน: ${empoyeeNo} \nเบอร์โทร: ${uPhone} \nวันที่ใช้รถ: ${startDateTime} \nวันที่คืนรถ: ${endDateTime} \nทะเบียนรถ: ${cLicense} \nชื่อรถ: ${cName} \nจังหวัด: ${province} \nหมายเหตุ: ${note}`,
                     },
                 }, (err, httpResponse, body) => {
                     if (err) {
@@ -82,7 +82,7 @@ exports.getBookingByEmail = async (req, res) => {
     };
 };
 
-exports.updateBookingApprove = async (req, res) => {
+exports.updateBookingStatus = async (req, res) => {
     try {
         const { id, status } = req.body;
         console.log(id, status);
@@ -110,7 +110,8 @@ exports.updateBookingActive = async (req, res) => {
                 res.status(500).json({ error });
             } else {
                 // Otherwise, send the results as a JSON array
-                res.send({ message: 'Update Active Success.' });
+                //res.send({ message: 'Update Active Success.' });
+                res.json(results);
             }
         });
     } catch (error) {
