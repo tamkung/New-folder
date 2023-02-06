@@ -6,7 +6,6 @@ const {
   signIn,
   signOut,
   verified,
-  protected
 } = require('../controllers/auth.controller');
 const { verifyToken } = require('../middleware/auth');
 
@@ -17,8 +16,6 @@ router.post("/auth/signin", signIn);
 router.post("/auth/signout", signOut);
 
 router.get("/auth/verified", verified);
-
-router.get("/auth/protected", protected);
 
 router.post("/auth/verifytoken", verifyToken);
 
