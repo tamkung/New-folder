@@ -19,25 +19,25 @@ exports.addBooking = async (req, res) => {
                     res.status(500).json({ error });
                 }
             } else {
-                // request({
-                //     method: 'POST',
-                //     uri: url_line_notify,
-                //     header: {
-                //         'Content-Type': 'multipart/form-data',
-                //     },
-                //     auth: {
-                //         bearer: TOKEN,
-                //     },
-                //     form: {
-                //         message: `เลขที่ใบจอง: ${id} \nชื่อผู้จอง: ${uName} \nรหัสพนักงาน: ${empoyeeNo} \nเบอร์โทร: ${uPhone} \nวันที่ใช้รถ: ${startDateTime} \nวันที่คืนรถ: ${endDateTime} \nทะเบียนรถ: ${cLicense} \nชื่อรถ: ${cName} \nจังหวัด: ${province} \nหมายเหตุ: ${note}`,
-                //     },
-                // }, (err, httpResponse, body) => {
-                //     if (err) {
-                //         console.log(err)
-                //     } else {
-                //         console.log(body)
-                //     }
-                // });
+                request({
+                    method: 'POST',
+                    uri: url_line_notify,
+                    header: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                    auth: {
+                        bearer: TOKEN,
+                    },
+                    form: {
+                        message: `เลขที่ใบจอง: ${id} \nชื่อผู้จอง: ${uName} \nรหัสพนักงาน: ${empoyeeNo} \nเบอร์โทร: ${uPhone} \nวันที่ใช้รถ: ${startDateTime} \nวันที่คืนรถ: ${endDateTime} \nทะเบียนรถ: ${cLicense} \nชื่อรถ: ${cName} \nจังหวัด: ${province} \nหมายเหตุ: ${note}`,
+                    },
+                }, (err, httpResponse, body) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        console.log(body)
+                    }
+                });
                 res.json({
                     status: "OK",
                     message: 'Booking added successfully'
