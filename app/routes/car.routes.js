@@ -5,7 +5,8 @@ const {
     addCar,
     getCar,
     getCarById,
-    updateCar,
+    updateCarStatus,
+    updateCarMile,
     deleteCar,
     getAvailableCars,
 } = require('../controllers/car.controller');
@@ -16,7 +17,9 @@ router.get("/getcar", getCar);
 
 router.get("/getcarbyid/:id", getCarById);
 
-router.post("/updatecar", updateCar);
+router.post("/updatecarstatus", updateCarStatus);
+
+router.post("/updatecarmile", updateCarMile);
 
 router.post("/deletecar/:id", deleteCar);
 

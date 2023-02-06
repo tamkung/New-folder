@@ -7,10 +7,10 @@ const TOKEN = "VDjb3kVwPw1el08RIMeUYafc7sZKaMLYoXmjnvliBvF"
 
 exports.addBooking = async (req, res) => {
     try {
-        const { id, province, uName, empoyeeNo, uEmail, uPhone, uSect, uPart, note, startDateTime, endDateTime, bookingDate, cLicense, cName } = req.body;
+        const { id, province, uName, empoyeeNo, uEmail, uPhone, uSect, uPart, note, startDateTime, endDateTime, bookingDate, cLicense, cName, image } = req.body;
         const day = Math.round((new Date(endDateTime) - new Date(startDateTime)) / 8.64e7) + 1;
-        const query = 'INSERT INTO booking (id, province, uName, empoyeeNo, uEmail, uPhone, uSect, uPart, note, startDateTime, endDateTime, bookingDate, cLicense, cName, day) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        const values = [id, province, uName, empoyeeNo, uEmail, uPhone, uSect, uPart, note, startDateTime, endDateTime, bookingDate, cLicense, cName, day];
+        const query = 'INSERT INTO booking (id, province, uName, empoyeeNo, uEmail, uPhone, uSect, uPart, note, startDateTime, endDateTime, bookingDate, cLicense, cName, day, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        const values = [id, province, uName, empoyeeNo, uEmail, uPhone, uSect, uPart, note, startDateTime, endDateTime, bookingDate, cLicense, cName, day, image];
         connection.query(query, values, (error, results) => {
             if (error) {
                 if (error.code === 'ER_DUP_ENTRY') {
@@ -19,25 +19,25 @@ exports.addBooking = async (req, res) => {
                     res.status(500).json({ error });
                 }
             } else {
-                request({
-                    method: 'POST',
-                    uri: url_line_notify,
-                    header: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                    auth: {
-                        bearer: TOKEN,
-                    },
-                    form: {
-                        message: `เลขที่ใบจอง: ${id} \nชื่อผู้จอง: ${uName} \nรหัสพนักงาน: ${empoyeeNo} \nเบอร์โทร: ${uPhone} \nวันที่ใช้รถ: ${startDateTime} \nวันที่คืนรถ: ${endDateTime} \nทะเบียนรถ: ${cLicense} \nชื่อรถ: ${cName} \nจังหวัด: ${province} \nหมายเหตุ: ${note}`,
-                    },
-                }, (err, httpResponse, body) => {
-                    if (err) {
-                        console.log(err)
-                    } else {
-                        console.log(body)
-                    }
-                });
+                // request({
+                //     method: 'POST',
+                //     uri: url_line_notify,
+                //     header: {
+                //         'Content-Type': 'multipart/form-data',
+                //     },
+                //     auth: {
+                //         bearer: TOKEN,
+                //     },
+                //     form: {
+                //         message: `เลขที่ใบจอง: ${id} \nชื่อผู้จอง: ${uName} \nรหัสพนักงาน: ${empoyeeNo} \nเบอร์โทร: ${uPhone} \nวันที่ใช้รถ: ${startDateTime} \nวันที่คืนรถ: ${endDateTime} \nทะเบียนรถ: ${cLicense} \nชื่อรถ: ${cName} \nจังหวัด: ${province} \nหมายเหตุ: ${note}`,
+                //     },
+                // }, (err, httpResponse, body) => {
+                //     if (err) {
+                //         console.log(err)
+                //     } else {
+                //         console.log(body)
+                //     }
+                // });
                 res.json({
                     status: "OK",
                     message: 'Booking added successfully'
@@ -100,18 +100,17 @@ exports.updateBookingStatus = async (req, res) => {
     };
 };
 
-exports.updateBookingActive = async (req, res) => {
+exports.updateBookingStartMile = async (req, res) => {
     try {
-        const { id, active } = req.body;
-        console.log(id, active);
-        connection.query('UPDATE booking SET active = ? WHERE id = ?', [active, id], (error, results) => {
+        const { id, startMile } = req.body;
+        console.log(id, startMile);
+        connection.query('UPDATE booking SET startMile = ? WHERE id = ?', [startMile, id], (error, results) => {
             if (error) {
                 // If an error occurred, send a server error response
                 res.status(500).json({ error });
             } else {
                 // Otherwise, send the results as a JSON array
-                //res.send({ message: 'Update Active Success.' });
-                res.json(results);
+                res.send({ message: 'Update Status Success.' });
             }
         });
     } catch (error) {
@@ -119,17 +118,18 @@ exports.updateBookingActive = async (req, res) => {
     };
 };
 
-exports.updateBookingFinish = async (req, res) => {
+exports.updateBookingEndMile = async (req, res) => {
     try {
-        const { id, finish } = req.body;
-        console.log(id, finish);
-        connection.query('UPDATE booking SET finish = ? WHERE id = ?', [finish, id], (error, results) => {
+        const { id, endMile } = req.body;
+        console.log(id, endMile);
+        // const distance = endMile - startMile;
+        connection.query('UPDATE booking SET endMile = ?, distance = endMile - startMile  WHERE id = ?', [endMile, id], (error, results) => {
             if (error) {
                 // If an error occurred, send a server error response
                 res.status(500).json({ error });
             } else {
                 // Otherwise, send the results as a JSON array
-                res.send({ message: 'Update Finish Success.' });
+                res.send({ message: 'Update Status Success.' });
             }
         });
     } catch (error) {

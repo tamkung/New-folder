@@ -67,11 +67,29 @@ exports.getCarById = async (req, res) => {
     };
 };
 
-exports.updateCar = async (req, res) => {
+exports.updateCarStatus = async (req, res) => {
     try {
         const { license, status } = req.body;
         console.log(license, status);
         connection.query('UPDATE cars SET status = ? WHERE license = ?', [status, license], (error, results) => {
+            if (error) {
+                // If an error occurred, send a server error response
+                res.status(500).json({ error });
+            } else {
+                // Otherwise, send the results as a JSON array
+                res.send({ message: 'Update Car Success.' });
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error!!!' });
+    };
+};
+
+exports.updateCarMile = async (req, res) => {
+    try {
+        const { license, currentMile } = req.body;
+        console.log(license, currentMile);
+        connection.query('UPDATE cars SET currentMile = ? WHERE license = ?', [currentMile, license], (error, results) => {
             if (error) {
                 // If an error occurred, send a server error response
                 res.status(500).json({ error });

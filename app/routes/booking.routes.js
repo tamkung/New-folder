@@ -7,8 +7,8 @@ const {
     getBookingByEmail,
     searchBookingByDateRange,
     updateBookingStatus,
-    updateBookingActive,
-    updateBookingFinish
+    updateBookingStartMile,
+    updateBookingEndMile,
 } = require('../controllers/booking.controller');
 
 router.post("/addbooking", addBooking);
@@ -19,9 +19,9 @@ router.get("/getbookingbyemail/:id", getBookingByEmail);
 
 router.post("/updatebookingstatus", updateBookingStatus);
 
-// router.post("/updatebookingactive", updateBookingActive);
+router.post("/updatebookingstartmile", updateBookingStartMile);
 
-// router.post("updatebookingfinish", updateBookingFinish);
+router.post("/updatebookingendmile", updateBookingEndMile);
 
 router.post("/searchbookingbydaterange", searchBookingByDateRange);
 
