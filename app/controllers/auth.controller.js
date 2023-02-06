@@ -107,24 +107,6 @@ module.exports.verified = async (req, res) => {
     }
 };
 
-module.exports.protected = async (req, res) => {
-    try {
-        // Get the JWT from the request header
-        const token = req.headers['x-access-token'];
-        // Verify the JWT
-        jwt.verify(token, config.secret, (error, decoded) => {
-            if (error) {
-                res.status(401).json({ message: 'Not authorized' });
-            } else {
-                // The JWT is valid, so send the protected data
-                res.json({ data: 'protected data' });
-            }
-        });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
 module.exports.signOut = async (req, res) => {
     try {
         // Clear the JWT from the request header

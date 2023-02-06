@@ -36,3 +36,21 @@ module.exports.verifyToken = (req, res, next) => {
 //         return res.status(401).send("Token Invalid!!!");
 //     }
 // };
+
+// module.exports.verifyToken = async (req, res) => {
+//     try {
+//         // Get the JWT from the request header
+//         const token = req.headers['x-access-token'];
+//         // Verify the JWT
+//         jwt.verify(token, config.secret, (error, decoded) => {
+//             if (error) {
+//                 res.status(401).json({ message: 'Not authorized' });
+//             } else {
+//                 // The JWT is valid, so send the protected data
+//                 res.json({ data: 'protected data' });
+//             }
+//         });
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// };
