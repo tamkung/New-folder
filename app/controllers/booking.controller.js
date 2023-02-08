@@ -110,7 +110,7 @@ exports.updateBookingStartMile = async (req, res) => {
                 res.status(500).json({ error });
             } else {
                 // Otherwise, send the results as a JSON array
-                res.send({ message: 'Update Status Success.' });
+                res.send({ message: 'Update StartMile Success.' });
             }
         });
     } catch (error) {
@@ -129,7 +129,26 @@ exports.updateBookingEndMile = async (req, res) => {
                 res.status(500).json({ error });
             } else {
                 // Otherwise, send the results as a JSON array
-                res.send({ message: 'Update Status Success.' });
+                res.send({ message: 'Update EndMile Success.' });
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error!!!' });
+    };
+};
+
+exports.updateBookingImage = async (req, res) => {
+    try {
+        const { id, image } = req.body;
+        console.log(id, image);
+        // const distance = endMile - startMile;
+        connection.query('UPDATE booking SET image = ? WHERE id = ?', [image, id], (error, results) => {
+            if (error) {
+                // If an error occurred, send a server error response
+                res.status(500).json({ error });
+            } else {
+                // Otherwise, send the results as a JSON array
+                res.send({ message: 'Update Image Success.' });
             }
         });
     } catch (error) {

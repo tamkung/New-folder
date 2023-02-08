@@ -9,6 +9,7 @@ const {
     updateBookingStatus,
     updateBookingStartMile,
     updateBookingEndMile,
+    updateBookingImage,
 } = require('../controllers/booking.controller');
 
 router.post("/addbooking", addBooking);
@@ -22,6 +23,8 @@ router.post("/updatebookingstatus", updateBookingStatus);
 router.post("/updatebookingstartmile", updateBookingStartMile);
 
 router.post("/updatebookingendmile", updateBookingEndMile);
+
+router.post("/updatebookingimage", updateBookingImage);
 
 router.post("/searchbookingbydaterange", searchBookingByDateRange);
 
