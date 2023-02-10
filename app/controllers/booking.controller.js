@@ -7,10 +7,10 @@ const TOKEN = "VDjb3kVwPw1el08RIMeUYafc7sZKaMLYoXmjnvliBvF"
 
 exports.addBooking = async (req, res) => {
     try {
-        const { id, province, uName, empoyeeNo, uEmail, uPhone, uSect, uPart, note, startDateTime, endDateTime, bookingDate, cLicense, cName, image } = req.body;
+        const { id, province, uName, empoyeeNo, uEmail, uPhone, uSectNo, uSectName, note, startDateTime, endDateTime, bookingDate, cLicense, cName, image } = req.body;
         const day = Math.round((new Date(endDateTime) - new Date(startDateTime)) / 8.64e7) + 1;
-        const query = 'INSERT INTO booking (id, province, uName, empoyeeNo, uEmail, uPhone, uSect, uPart, note, startDateTime, endDateTime, bookingDate, cLicense, cName, day, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        const values = [id, province, uName, empoyeeNo, uEmail, uPhone, uSect, uPart, note, startDateTime, endDateTime, bookingDate, cLicense, cName, day, image];
+        const query = 'INSERT INTO booking (id, province, uName, empoyeeNo, uEmail, uPhone, uSectNo, uSectName, note, startDateTime, endDateTime, bookingDate, cLicense, cName, day, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        const values = [id, province, uName, empoyeeNo, uEmail, uPhone, uSectNo, uSectName, note, startDateTime, endDateTime, bookingDate, cLicense, cName, day, image];
         connection.query(query, values, (error, results) => {
             if (error) {
                 if (error.code === 'ER_DUP_ENTRY') {
