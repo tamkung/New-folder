@@ -19,25 +19,25 @@ exports.addBooking = async (req, res) => {
                     res.status(500).json({ error });
                 }
             } else {
-                request({
-                    method: 'POST',
-                    uri: url_line_notify,
-                    header: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                    auth: {
-                        bearer: TOKEN,
-                    },
-                    form: {
-                        message: `เลขที่ใบจอง: ${id} \nชื่อผู้จอง: ${uName} \nรหัสพนักงาน: ${empoyeeNo} \nเบอร์โทร: ${uPhone} \nวันที่ใช้รถ: ${startDateTime} \nวันที่คืนรถ: ${endDateTime} \nทะเบียนรถ: ${cLicense} \nชื่อรถ: ${cName} \nจังหวัด: ${province} \nหมายเหตุ: ${note}`,
-                    },
-                }, (err, httpResponse, body) => {
-                    if (err) {
-                        console.log(err)
-                    } else {
-                        console.log(body)
-                    }
-                });
+                // request({
+                //     method: 'POST',
+                //     uri: url_line_notify,
+                //     header: {
+                //         'Content-Type': 'multipart/form-data',
+                //     },
+                //     auth: {
+                //         bearer: TOKEN,
+                //     },
+                //     form: {
+                //         message: `เลขที่ใบจอง: ${id} \nชื่อผู้จอง: ${uName} \nรหัสพนักงาน: ${empoyeeNo} \nเบอร์โทร: ${uPhone} \nวันที่ใช้รถ: ${startDateTime} \nวันที่คืนรถ: ${endDateTime} \nทะเบียนรถ: ${cLicense} \nชื่อรถ: ${cName} \nจังหวัด: ${province} \nหมายเหตุ: ${note}`,
+                //     },
+                // }, (err, httpResponse, body) => {
+                //     if (err) {
+                //         console.log(err)
+                //     } else {
+                //         console.log(body)
+                //     }
+                // });
                 res.json({
                     status: "OK",
                     message: 'Booking added successfully'
@@ -120,10 +120,10 @@ exports.updateBookingStartMile = async (req, res) => {
 
 exports.updateBookingEndMile = async (req, res) => {
     try {
-        const { id, endMile } = req.body;
-        console.log(id, endMile);
+        const { id, endDateTime, endMile } = req.body;
+        console.log(id, endDateTime, endMile);
         // const distance = endMile - startMile;
-        connection.query('UPDATE booking SET endMile = ?, distance = endMile - startMile  WHERE id = ?', [endMile, id], (error, results) => {
+        connection.query('UPDATE booking SET endDateTime = ?, endMile = ?, distance = endMile - startMile  WHERE id = ?', [endDateTime, endMile, id], (error, results) => {
             if (error) {
                 // If an error occurred, send a server error response
                 res.status(500).json({ error });
@@ -156,10 +156,28 @@ exports.updateBookingImage = async (req, res) => {
     };
 };
 
+
 exports.searchBookingByDateRange = async (req, res) => {
     try {
         const { startDate, endDate } = req.body;
         connection.query('SELECT * FROM booking WHERE bookingDate BETWEEN ? AND ?', [startDate, endDate], (error, results) => {
+            if (error) {
+                // If an error occurred, send a server error response
+                res.status(500).json({ error });
+            } else {
+                // Otherwise, send the results as a JSON array
+                res.json(results);
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error!!!' });
+    };
+}
+
+exports.searchBookingByEmail = async (req, res) => {
+    try {
+        const { uEmail } = req.body;
+        connection.query('SELECT * FROM booking WHERE uEmail = ?', [uEmail], (error, results) => {
             if (error) {
                 // If an error occurred, send a server error response
                 res.status(500).json({ error });
