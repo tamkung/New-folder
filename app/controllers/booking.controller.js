@@ -7,10 +7,10 @@ const TOKEN = "VDjb3kVwPw1el08RIMeUYafc7sZKaMLYoXmjnvliBvF"
 
 exports.addBooking = async (req, res) => {
     try {
-        const { id, province, uName, empoyeeNo, uEmail, uPhone, uSectNo, uSectName, note, startDateTime, endDateTime, bookingDate, cLicense, cName, image } = req.body;
+        const { id, province, uName, empoyeeNo, uEmail, uPhone, uSectNo, uSectName, note, startDateTime, endDateTime, bookingDate, cLicense, cName, image, status } = req.body;
         const day = Math.round((new Date(endDateTime) - new Date(startDateTime)) / 8.64e7) + 1;
-        const query = 'INSERT INTO booking (id, province, uName, empoyeeNo, uEmail, uPhone, uSectNo, uSectName, note, startDateTime, endDateTime, bookingDate, cLicense, cName, day, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        const values = [id, province, uName, empoyeeNo, uEmail, uPhone, uSectNo, uSectName, note, startDateTime, endDateTime, bookingDate, cLicense, cName, day, image];
+        const query = 'INSERT INTO booking (id, province, uName, empoyeeNo, uEmail, uPhone, uSectNo, uSectName, note, startDateTime, endDateTime, bookingDate, cLicense, cName, day, image, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        const values = [id, province, uName, empoyeeNo, uEmail, uPhone, uSectNo, uSectName, note, startDateTime, endDateTime, bookingDate, cLicense, cName, day, image, status];
         connection.query(query, values, (error, results) => {
             if (error) {
                 if (error.code === 'ER_DUP_ENTRY') {
@@ -19,25 +19,25 @@ exports.addBooking = async (req, res) => {
                     res.status(500).json({ error });
                 }
             } else {
-                // request({
-                //     method: 'POST',
-                //     uri: url_line_notify,
-                //     header: {
-                //         'Content-Type': 'multipart/form-data',
-                //     },
-                //     auth: {
-                //         bearer: TOKEN,
-                //     },
-                //     form: {
-                //         message: `เลขที่ใบจอง: ${id} \nชื่อผู้จอง: ${uName} \nรหัสพนักงาน: ${empoyeeNo} \nเบอร์โทร: ${uPhone} \nวันที่ใช้รถ: ${startDateTime} \nวันที่คืนรถ: ${endDateTime} \nทะเบียนรถ: ${cLicense} \nชื่อรถ: ${cName} \nจังหวัด: ${province} \nหมายเหตุ: ${note}`,
-                //     },
-                // }, (err, httpResponse, body) => {
-                //     if (err) {
-                //         console.log(err)
-                //     } else {
-                //         console.log(body)
-                //     }
-                // });
+                request({
+                    method: 'POST',
+                    uri: url_line_notify,
+                    header: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                    auth: {
+                        bearer: TOKEN,
+                    },
+                    form: {
+                        message: `เลขที่ใบจอง: ${id} \nชื่อผู้จอง: ${uName} \nรหัสพนักงาน: ${empoyeeNo} \nเบอร์โทร: ${uPhone} \nวันที่ใช้รถ: ${startDateTime} \nวันที่คืนรถ: ${endDateTime} \nทะเบียนรถ: ${cLicense} \nชื่อรถ: ${cName} \nจังหวัด: ${province} \nหมายเหตุ: ${note}`,
+                    },
+                }, (err, httpResponse, body) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        console.log(body)
+                    }
+                });
                 res.json({
                     status: "OK",
                     message: 'Booking added successfully'
