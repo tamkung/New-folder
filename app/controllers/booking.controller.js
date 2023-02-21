@@ -52,7 +52,7 @@ exports.addBooking = async (req, res) => {
 
 exports.getBooking = async (req, res) => {
     try {
-        connection.query('SELECT * FROM booking', (error, results) => {
+        connection.query('SELECT * FROM booking ORDER BY id DESC', (error, results) => {
             if (error) {
                 // If an error occurred, send a server error response
                 res.status(500).json({ error });
