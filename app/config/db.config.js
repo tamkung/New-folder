@@ -39,7 +39,7 @@ const db_config = {
     port: 3306,
     user: "username",
     password: "password",
-    database: "ploishare",
+    database: "ploishare_preview",
     ssl: null
 
 };
