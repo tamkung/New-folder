@@ -109,3 +109,39 @@ module.exports.sendVerificationEmail = (email) => {
         }
     });
 }
+
+module.exports.sendEmailNotify = (email, license) => {
+    const transporter = nodemailer.createTransport(smtpTransport({
+        service: "Gmail",
+        host: "smtp.gmail.com",
+        secure: false,
+        port: 465,
+        auth: {
+            user: auth.user,
+            pass: auth.pass
+        },
+        pool: true,
+        tls: {
+            // do not fail on invalid certs
+            rejectUnauthorized: false,
+        },
+    }));
+
+    const mailOptions = {
+        from: '"ปล่อยShare" <noreply@example.com>',
+        to: email,
+        subject: 'Booking Confirmation',
+        html: `<h1>Booking Confirmation</h1>
+        <h2>Hello ${email}</h2>
+        <h3>Car License : ${license}</h3>
+        <p>Thank you for booking.</p>`
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+}

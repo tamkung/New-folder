@@ -1,5 +1,6 @@
 const connection = require("../config/db.config");
 const request = require('request');
+const nodemailer = require("../config/nodemailer.config");
 
 const url_line_notify = "https://notify-api.line.me/api/notify";
 //const TOKEN = "3gyNVnhIk7bJOOAXNCqsCyl5Y4skkf3fz0HmSFknJff" 
@@ -68,7 +69,7 @@ exports.getBooking = async (req, res) => {
 exports.getBookingByEmail = async (req, res) => {
     try {
         const uEmail = req.params.id;
-        connection.query('SELECT * FROM booking WHERE uEmail = ?', [uEmail], (error, results) => {
+        connection.query('SELECT * FROM booking WHERE uEmail = ? ORDER BY id DESC', [uEmail], (error, results) => {
             if (error) {
                 // If an error occurred, send a server error response
                 res.json(results.length > 0 ? results[0] : { message: 'Booking not found' });
@@ -77,6 +78,16 @@ exports.getBookingByEmail = async (req, res) => {
                 res.json(results);
             }
         });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error!!!' });
+    };
+};
+
+exports.sendNotify = async (req, res) => {
+    try {
+        const { email, license } = req.body;
+        console.log(email + license);
+        nodemailer.sendEmailNotify(email, license);
     } catch (error) {
         res.status(500).json({ message: 'Server Error!!!' });
     };
@@ -110,6 +121,7 @@ exports.updateBookingStartMile = async (req, res) => {
                 res.status(500).json({ error });
             } else {
                 // Otherwise, send the results as a JSON array
+                nodemailer.sendEmailNotify(email);
                 res.send({ message: 'Update StartMile Success.' });
             }
         });

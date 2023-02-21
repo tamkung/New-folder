@@ -5,6 +5,7 @@ const {
     addBooking,
     getBooking,
     getBookingByEmail,
+    sendNotify,
     updateBookingStatus,
     updateBookingStartMile,
     updateBookingEndMile,
@@ -18,6 +19,8 @@ router.post("/addbooking", addBooking);
 router.get("/getbooking", getBooking);
 
 router.get("/getbookingbyemail/:id", getBookingByEmail);
+
+router.post("/sendnotify", sendNotify);
 
 router.post("/updatebookingstatus", updateBookingStatus);
 
