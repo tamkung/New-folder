@@ -115,13 +115,13 @@ exports.updateBookingStartMile = async (req, res) => {
     try {
         const { id, startMile } = req.body;
         console.log(id, startMile);
+        console.log('asdasd');
         connection.query('UPDATE booking SET startMile = ? WHERE id = ?', [startMile, id], (error, results) => {
             if (error) {
                 // If an error occurred, send a server error response
                 res.status(500).json({ error });
             } else {
                 // Otherwise, send the results as a JSON array
-                nodemailer.sendEmailNotify(email);
                 res.send({ message: 'Update StartMile Success.' });
             }
         });
