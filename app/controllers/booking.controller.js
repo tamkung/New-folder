@@ -51,7 +51,7 @@ exports.addBooking = async (req, res) => {
 
 exports.getBooking = async (req, res) => {
     try {
-        connection.query('SELECT * FROM booking', (error, results) => {
+        connection.query('SELECT * FROM booking ORDER BY id DESC', (error, results) => {
             if (error) {
                 // If an error occurred, send a server error response
                 res.status(500).json({ error });
@@ -68,7 +68,7 @@ exports.getBooking = async (req, res) => {
 exports.getBookingByEmail = async (req, res) => {
     try {
         const uEmail = req.params.id;
-        connection.query('SELECT * FROM booking WHERE uEmail = ?', [uEmail], (error, results) => {
+        connection.query('SELECT * FROM booking WHERE uEmail = ? ORDER BY id DESC', [uEmail], (error, results) => {
             if (error) {
                 // If an error occurred, send a server error response
                 res.json(results.length > 0 ? results[0] : { message: 'Booking not found' });
