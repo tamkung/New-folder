@@ -85,9 +85,9 @@ exports.getBookingByEmail = async (req, res) => {
 
 exports.sendNotify = async (req, res) => {
     try {
-        const { email, license } = req.body;
-        console.log(email + license);
-        nodemailer.sendEmailNotify(email, license);
+        const { name, email, license, brand, startDate, endDate } = req.body;
+        console.log(name, email, license, brand, startDate, endDate);
+        nodemailer.sendEmailNotify(name, email, license, brand, startDate, endDate);
     } catch (error) {
         res.status(500).json({ message: 'Server Error!!!' });
     };

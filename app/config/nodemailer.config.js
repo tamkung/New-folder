@@ -110,7 +110,7 @@ module.exports.sendVerificationEmail = (email) => {
     });
 }
 
-module.exports.sendEmailNotify = (email, license) => {
+module.exports.sendEmailNotify = (name, email, license, brand, startDate, endDate) => {
     const transporter = nodemailer.createTransport(smtpTransport({
         service: "Gmail",
         host: "smtp.gmail.com",
@@ -130,11 +130,24 @@ module.exports.sendEmailNotify = (email, license) => {
     const mailOptions = {
         from: '"ปล่อยShare" <noreply@example.com>',
         to: email,
-        subject: 'Booking Confirmation',
-        html: `<h1>Booking Confirmation</h1>
-        <h2>Hello ${email}</h2>
-        <h3>Car License : ${license}</h3>
-        <p>Thank you for booking.</p>`
+        subject: 'การจองรถของท่านได้รับการอนุมัติแล้ว',
+        html: `<h3>การจองรถของท่านได้รับการอนุมัติแล้ว</h3>
+        <h4>สวัสดีคุณ ${name} ${email}</h4>
+        <h4>ข้อความนี้เป็นข้อความตอบกลับจากเว็บไซต์ "ปล่อยShared" เพื่อเป็นการแสดงว่า คำขอจองรถของท่านได้ถูกอนุมัติ จากผู้ดูแลระบบแล้ว</h4>
+        <hr>
+        <h4>
+        รายละเอียดการจอง<br>
+        ทะเบียน : ${license}<br>
+        ยี่ห้อ ${brand}<br>
+        ผู้จอง : ${name}<br>
+        ตั้งแต่วันที่ : ${startDate} น.<br>
+        ถึงวันที่ : ${endDate} น.<br>
+        <br>
+        <br>
+        จึงเรียนมาเพื่อทราบ<br>
+        คณะผู้ดูแลระบบ
+        </h4>
+        <br>`
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
