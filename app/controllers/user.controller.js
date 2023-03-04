@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 const connection = require("../config/db.config");
 
 exports.getUser = async (req, res) => {
@@ -43,6 +45,23 @@ exports.updateUser = async (req, res) => {
             } else {
                 // Otherwise, send the results as a JSON array
                 res.send({ message: 'Update User Success.' });
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error!!!' });
+    };
+};
+
+exports.resetPassword = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        console.log(email, password);
+        const hashedPassword = bcrypt.hashSync(password, 8);
+        connection.query('UPDATE users SET password = ? WHERE email = ?', [hashedPassword, email], (error, results) => {
+            if (error) {
+                res.status(500).json({ error });
+            } else {
+                res.send({ message: 'Password Reset Success.' });
             }
         });
     } catch (error) {

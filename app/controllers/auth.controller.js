@@ -107,6 +107,25 @@ module.exports.verified = async (req, res) => {
     }
 };
 
+module.exports.forgotPass = async (req, res) => {
+    try {
+        const { email } = req.body;
+        console.log(email);
+        connection.query('SELECT * FROM users WHERE email = ? AND type != "admin"', [email], (error, results) => {
+            if (error) {
+                res.status(500).json({ error });
+            } else {
+                res.json(results.length > 0 ? results[0] : { message: 'User not found' });
+                if (results.length > 0) {
+                    nodemailer.sendForgotPassEmail(email);
+                }
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error!!!' });
+    };
+};
+
 module.exports.signOut = async (req, res) => {
     try {
         // Clear the JWT from the request header

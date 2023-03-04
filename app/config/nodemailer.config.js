@@ -24,12 +24,6 @@ module.exports.sendVerificationEmail = (email) => {
         from: '"ปล่อยShare" <noreply@example.com>',
         to: email,
         subject: 'Please confirm your account',
-        // html: `<h1>Email Confirmation</h1>
-        // <h2>Hello ${email}</h2>
-        // <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
-        // <a href="https://api-ploishare.cyclic.app/verify?email=${email}"> Click here</a>
-        // </div>`,
-        //html: '<p>Click <a href="https://api-ploishare.cyclic.app/verify?email=' + email + '">here</a> to verify your email</p>'
         html: `<div class="es-wrapper-color">
         <!--[if gte mso 9]>
     <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
@@ -99,6 +93,42 @@ module.exports.sendVerificationEmail = (email) => {
             </tbody>
         </table>
     </div>`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+}
+
+module.exports.sendForgotPassEmail = (email, token) => {
+    const transporter = nodemailer.createTransport(smtpTransport({
+        service: "Gmail",
+        host: "smtp.gmail.com",
+        secure: false,
+        port: 465,
+        auth: {
+            user: auth.user,
+            pass: auth.pass
+        },
+        pool: true,
+        tls: {
+            // do not fail on invalid certs
+            rejectUnauthorized: false,
+        },
+    }));
+
+    const mailOptions = {
+        from: '"ปล่อยShare" <noreply@example.com>',
+        to: email,
+        subject: 'Reset Password',
+        html: `<h3>Reset Password</h3>
+        <h3>Hello ${email}</h3>
+        <p>Clicking on the following link</p>
+        <a href="https://ploishare.vercel.app/resetpass/${email}"> Click here</a>`,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
