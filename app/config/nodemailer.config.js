@@ -128,7 +128,7 @@ module.exports.sendForgotPassEmail = (email, token) => {
         html: `<h3>Reset Password</h3>
         <h3>Hello ${email}</h3>
         <p>Clicking on the following link</p>
-        <a href="https://ploishare.vercel.app/resetpass/${email}"> Click here</a>`,
+        <a href="https://ploishare.vercel.app/${email}"> Click here</a>`,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
