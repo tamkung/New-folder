@@ -2,8 +2,9 @@ const connection = require("../config/db.config");
 const request = require('request');
 
 const url_line_notify = "https://notify-api.line.me/api/notify";
-//const TOKEN = "3gyNVnhIk7bJOOAXNCqsCyl5Y4skkf3fz0HmSFknJff" 
-const TOKEN = "VDjb3kVwPw1el08RIMeUYafc7sZKaMLYoXmjnvliBvF"
+//const TOKEN = "3gyNVnhIk7bJOOAXNCqsCyl5Y4skkf3fz0HmSFknJff" //private 
+//const TOKEN = "VDjb3kVwPw1el08RIMeUYafc7sZKaMLYoXmjnvliBvF" //test
+const TOKEN = "4AaN3F4PXUnrOmDJUMENVBy7S624pU6B7eL60iatF3P" //Main Group
 
 exports.addBooking = async (req, res) => {
     try {
