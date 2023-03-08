@@ -4,7 +4,7 @@ const request = require('request');
 const url_line_notify = "https://notify-api.line.me/api/notify";
 //const TOKEN = "3gyNVnhIk7bJOOAXNCqsCyl5Y4skkf3fz0HmSFknJff" //private 
 //const TOKEN = "VDjb3kVwPw1el08RIMeUYafc7sZKaMLYoXmjnvliBvF" //test
-const TOKEN = "4AaN3F4PXUnrOmDJUMENVBy7S624pU6B7eL60iatF3P" //Main Group
+const TOKEN = "mww3GKo6qlUac9A75aHaIYIaDjo0hl6XK6nj4rUGyf3" //Main Group
 
 exports.addBooking = async (req, res) => {
     try {
