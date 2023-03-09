@@ -2,7 +2,7 @@ const connection = require("../config/db.config");
 
 exports.addCar = async (req, res) => {
     try {
-        const { license, province, brand, model, color, seat, detail, image } = req.body;
+        const { license, province, brand, model, rentDate, color, seat, detail, image } = req.body;
         const sql = 'SELECT * FROM cars WHERE license = ?';
         const values = [license];
         connection.query(sql, values, (error, results) => {
@@ -13,8 +13,8 @@ exports.addCar = async (req, res) => {
             } else {
 
                 // Insert the new user into the database
-                const sql = 'INSERT INTO cars (license, province, brand, model, color, seat, detail, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-                const values = [license, province, brand, model, color, seat, detail, image];
+                const sql = 'INSERT INTO cars (license, province, brand, model, rentDate, color, seat, detail, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+                const values = [license, province, brand, model, rentDate, color, seat, detail, image];
                 connection.query(sql, values, (error) => {
                     if (error) {
                         res.status(500).json({ message: 'Server Error!!!' });
