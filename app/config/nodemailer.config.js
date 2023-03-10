@@ -23,7 +23,7 @@ module.exports.sendVerificationEmail = (email) => {
     const mailOptions = {
         from: '"ปล่อยShare" <noreply@example.com>',
         to: email,
-        subject: 'Please confirm your account',
+        subject: 'ยืนยัน SCG Email ของคุณ',
         html: `<div class="es-wrapper-color">
         <!--[if gte mso 9]>
     <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
@@ -53,27 +53,19 @@ module.exports.sendVerificationEmail = (email) => {
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-p10b es-m-txt-c">
-                                                                                        <h1 style="font-size: 46px; line-height: 100%;">Confirm Your Email</h1>
+                                                                                        <h3 style="font-size: 36px; line-height: 100%;">ยืนยันตัวตน SCG Email ของคุณ</h3>
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-p5t es-p5b es-p40r es-p40l es-m-p0r es-m-p0l">
-                                                                                        <p>You’ve received this message because your email address has been registered with our site. Please click the button below to verify your email address and confirm that you are the owner of this account.</p>
+                                                                                        <p>ขอบคุณสำหรับการสมัครใช้บริการเว็บไซต์ "ปล่อยShared" กดปุ่ม "ยืนยันตัวตน" เพื่อดำเนินการเข้าสู่ระบบ หากการสมัครครั้งนี้ไม่เกี่ยวข้องกับท่านหรือไม่ใช่ท่าน กรุณาตอบกลับ email แล้วระบุว่า "ไม่ใช่ท่าน ฯลฯ" ขอบคุณค่ะ</p>
                                                                                     </td>
                                                                                 </tr>
+                                                                                
                                                                                 <tr>
-                                                                                    <td align="center" class="esd-block-text es-p10t es-p5b">
-                                                                                        <p>If you did not register with us, please disregard this email.</p>
-                                                                                    </td>
+                                                                                    <td align="center" class="esd-block-button es-p10t es-p10b"><span class="es-button-border" style="border-radius: 6px;"><a href="https://ploishare.vercel.app/confirm/${email}" class="es-button" target="_blank" style="background-color: #4CAF50; /* Green */ border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px;">ยืนยันตัวตน</a></span></td>
                                                                                 </tr>
-                                                                                <tr>
-                                                                                    <td align="center" class="esd-block-button es-p10t es-p10b"><span class="es-button-border" style="border-radius: 6px;"><a href="https://ploishare.vercel.app/confirm/${email}" class="es-button" target="_blank" style="background-color: #4CAF50; /* Green */ border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px;">CONFIRM YOUR EMAIL</a></span></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td align="center" class="esd-block-text es-p5t es-p5b es-p40r es-p40l es-m-p0r es-m-p0l">
-                                                                                        <p>Once confirmed, this email will be uniquely associated with your account.</p>
-                                                                                    </td>
-                                                                                </tr>
+                                                                                
                                                                             </tbody>
                                                                         </table>
                                                                     </td>
