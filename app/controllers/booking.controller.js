@@ -30,7 +30,7 @@ exports.addBooking = async (req, res) => {
                         bearer: TOKEN,
                     },
                     form: {
-                        message: `เลขที่ใบจอง: ${id} \nชื่อผู้จอง: ${uName} \nรหัสพนักงาน: ${empoyeeNo} \nเบอร์โทร: ${uPhone} \nวันที่ใช้รถ: ${startDateTime} \nวันที่คืนรถ: ${endDateTime} \nทะเบียนรถ: ${cLicense} \nชื่อรถ: ${cName} \nจังหวัด: ${province} \nหมายเหตุ: ${note}`,
+                        message: `เลขที่ใบจอง: ${id} \nชื่อผู้จอง: ${uName} \nรหัสพนักงาน: ${empoyeeNo} \nเบอร์โทร: ${uPhone} \nอีเมล: ${uEmail} \nวันที่ใช้รถ: ${startDateTime} \nวันที่คืนรถ: ${endDateTime} \nทะเบียนรถ: ${cLicense} \nชื่อรถ: ${cName} \nจังหวัด: ${province} \nหมายเหตุ: ${note}`,
                     },
                 }, (err, httpResponse, body) => {
                     if (err) {
