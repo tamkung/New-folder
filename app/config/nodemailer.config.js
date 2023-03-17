@@ -58,14 +58,18 @@ module.exports.sendVerificationEmail = (email) => {
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-p5t es-p5b es-p40r es-p40l es-m-p0r es-m-p0l">
-                                                                                        <p>ขอบคุณสำหรับการสมัครใช้บริการเว็บไซต์ "ปล่อยShared" กดปุ่ม "ยืนยันตัวตน" เพื่อดำเนินการเข้าสู่ระบบ หากการสมัครครั้งนี้ไม่เกี่ยวข้องกับท่านหรือไม่ใช่ท่าน กรุณาตอบกลับ email แล้วระบุว่า "ไม่ใช่ท่าน ฯลฯ" ขอบคุณค่ะ</p>
+                                                                                        <p>ขอบคุณสำหรับการสมัครใช้บริการเว็บไซต์ "ปล่อยShared" กดปุ่ม "ยืนยันตัวตน" เพื่อดำเนินการเข้าสู่ระบบ</p>
                                                                                     </td>
                                                                                 </tr>
                                                                                 
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-button es-p10t es-p10b"><span class="es-button-border" style="border-radius: 6px;"><a href="https://ploishare.vercel.app/confirm/${email}" class="es-button" target="_blank" style="background-color: #4CAF50; /* Green */ border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px;">ยืนยันตัวตน</a></span></td>
                                                                                 </tr>
-                                                                                
+                                                                                <tr>
+                                                                                    <td align="center" class="esd-block-text es-p5t es-p5b es-p40r es-p40l es-m-p0r es-m-p0l">
+                                                                                        <p>หากการสมัครครั้งนี้ไม่เกี่ยวข้องกับท่านหรือไม่ใช่ท่าน กรุณาตอบกลับ email แล้วระบุว่า "ไม่ใช่ท่าน ฯลฯ" ขอบคุณค่ะ</p>
+                                                                                    </td>
+                                                                                </tr>
                                                                             </tbody>
                                                                         </table>
                                                                     </td>
