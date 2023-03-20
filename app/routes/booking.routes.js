@@ -11,6 +11,7 @@ const {
     updateBookingImage,
     searchBookingByDateRange,
     searchBookingByEmail,
+    deleteBooking,
 } = require('../controllers/booking.controller');
 
 router.post("/addbooking", addBooking);
@@ -30,5 +31,7 @@ router.post("/updatebookingimage", updateBookingImage);
 router.post("/searchbookingbydaterange", searchBookingByDateRange);
 
 router.post("/searchbookingbyemail", searchBookingByEmail);
+
+router.post("/deletebooking/:id", deleteBooking);
 
 module.exports = router;

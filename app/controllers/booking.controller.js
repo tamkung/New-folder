@@ -191,3 +191,21 @@ exports.searchBookingByEmail = async (req, res) => {
         res.status(500).json({ message: 'Server Error!!!' });
     };
 }
+
+exports.deleteBooking = async (req, res) => {
+    try {
+        const id = req.params.id;
+        console.log(id);
+        connection.query('DELETE FROM booking WHERE id = ?', [id], (error, results) => {
+            if (error) {
+                // If an error occurred, send a server error response
+                res.status(500).json({ error });
+            } else {
+                // Otherwise, send the results as a JSON array
+                res.send({ message: 'Delete Booking Success.' });
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error!!!' });
+    };
+};
